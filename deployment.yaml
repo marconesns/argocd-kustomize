@@ -5,7 +5,7 @@ metadata:
     app: nginx
   name: nginx
 spec:
-  replicas: 2
+  replicas: 5
   selector:
     matchLabels:
       app: nginx
@@ -23,4 +23,4 @@ spec:
             memory: 25Mi
           limists:
             cpu: 100m
-            memory: 256Mi
+            memory: 512Mi
