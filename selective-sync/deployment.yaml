@@ -2,25 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: nginx
-  name: nginx
+    app: myapp-sync
+  name: myapp-sync
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: myapp-sync
   template:
     metadata:
       labels:
-        app: nginx
+        app: myapp-sync
     spec:
       containers:
       - image: nginx:1.25.2
-        name: nginx
-        resources:
-          requests:
-            cpu: 25m
-            memory: 25Mi
-          limits:
-            cpu: 128m
-            memory: 512Mi
+        name: myapp-sync
+        ports:
+        - containerPort: 80
+        resources: {}
