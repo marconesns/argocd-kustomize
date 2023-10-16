@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myapp
+    argocd.argoproj.io/instance: argocd-prod
+  name: myapp
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - image: 'nginx:1.25.2'
+          name: myapp
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
