@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-red
+  name: app-red
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-red
+  template:
+    metadata:
+      labels:
+        app: app-red
+    spec:
+      volumes:
+      - name: webdata
+        emptyDir: {}
+      initContainers:
+      - name: web-content
+        image: busybox
+        volumeMounts:
+        - name: webdata
+          mountPath: "/webdata"
+        command: ["/bin/sh", "-c", 'echo "<h1>I am <font color=red>red</font></h1>" > /webdata/index.html']
+      containers:
+      - image: nginx:1.25.2
+        name: nginx
+        volumeMounts:
+        - name: webdata
+          mountPath: "/usr/share/nginx/html"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-red
+spec:
+  selector:
+    app: app-red
+  ports:
+    - port: 80
+      targetPort: 80
